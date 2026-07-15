@@ -29,7 +29,6 @@ export interface Recipe {
   name: string;
   category: RecipeCategory;
   description: string;
-  imagePrompt: string;
   ingredients: RecipeIngredient[];
   steps: string[];
   // HowToCook 原始 markdown 地址

@@ -11,8 +11,6 @@ export const recipes: Recipe[] = [
     name: "番茄炒蛋",
     category: "vegetarian_dish",
     description: "国民家常菜，酸甜软嫩，开胃下饭，孕产期温和易消化。",
-    imagePrompt:
-      "home-style Chinese tomato scrambled eggs on a ceramic plate, glossy red and yellow, fresh scallion garnish, warm natural light, top-down food photography",
     ingredients: [
       { name: "番茄", role: "main" },
       { name: "鸡蛋", role: "main" },
@@ -34,8 +32,6 @@ export const recipes: Recipe[] = [
     name: "蒸水蛋",
     category: "breakfast",
     description: "滑嫩如布丁的水蒸蛋，易消化高蛋白，孕吐期也能入口。",
-    imagePrompt:
-      "silky steamed Chinese egg custard in a ceramic bowl, glossy smooth surface, drizzled soy oil and scallions, soft warm light, food photography",
     ingredients: [
       { name: "鸡蛋", role: "main" },
       { name: "温水", role: "aux" },
@@ -56,8 +52,6 @@ export const recipes: Recipe[] = [
     name: "小米南瓜粥",
     category: "breakfast",
     description: "金黄软糯的养胃粥，温和滋补，孕期月子期皆宜。",
-    imagePrompt:
-      "golden millet and pumpkin congee in a stoneware bowl, creamy texture, warm morning light, rustic food photography",
     ingredients: [
       { name: "小米", role: "main" },
       { name: "南瓜", role: "main" },
@@ -76,8 +70,6 @@ export const recipes: Recipe[] = [
     name: "西红柿鸡蛋面",
     category: "staple",
     description: "酸甜汤面，一锅出餐，胃口不佳时的暖心主食。",
-    imagePrompt:
-      "Chinese tomato egg noodle soup in a deep bowl, red broth, soft egg ribbons, fresh noodles, steam rising, warm light, food photography",
     ingredients: [
       { name: "西红柿", role: "main" },
       { name: "鸡蛋", role: "main" },
@@ -99,8 +91,6 @@ export const recipes: Recipe[] = [
     name: "山药排骨汤",
     category: "soup",
     description: "清润滋补，健脾养胃，月子期温和进补的经典汤品。",
-    imagePrompt:
-      "Chinese yam and pork rib soup in a clay pot, clear broth, tender ribs, white yam slices, goji berries, warm light, food photography",
     ingredients: [
       { name: "排骨", role: "main" },
       { name: "山药", role: "main" },
@@ -121,8 +111,6 @@ export const recipes: Recipe[] = [
     name: "银耳莲子红枣羹",
     category: "dessert",
     description: "胶质满满的润燥甜羹，温和补血，孕产期温和甜点。",
-    imagePrompt:
-      "tremella lotus seed and red date sweet soup in a ceramic bowl, glossy gelatinous texture, red dates, lotus seeds, soft warm light, food photography",
     ingredients: [
       { name: "银耳", role: "main" },
       { name: "莲子", role: "main" },
@@ -143,8 +131,6 @@ export const recipes: Recipe[] = [
     name: "清炒西兰花",
     category: "vegetarian_dish",
     description: "翠绿爽脆，富含叶酸与纤维，孕期补充叶酸的轻食。",
-    imagePrompt:
-      "stir-fried Chinese broccoli florets on a white plate, vibrant green, glossy, garlic slices, warm light, food photography",
     ingredients: [
       { name: "西兰花", role: "main" },
       { name: "蒜", role: "aux" },
@@ -164,8 +150,6 @@ export const recipes: Recipe[] = [
     name: "韭菜炒鸡蛋",
     category: "vegetarian_dish",
     description: "经典韭菜炒蛋，孕期可食，哺乳期月子妈妈需注意回奶。",
-    imagePrompt:
-      "Chinese chive and egg stir-fry on a ceramic plate, vibrant green chives and golden egg, warm light, home-style food photography",
     ingredients: [
       { name: "韭菜", role: "main" },
       { name: "鸡蛋", role: "main" },
@@ -185,8 +169,6 @@ export const recipes: Recipe[] = [
     name: "红烧肉",
     category: "meat_dish",
     description: "浓油赤酱的经典红烧肉，孕产期建议以姜葱去腥，减少大料。",
-    imagePrompt:
-      "Chinese braised pork belly (hong shao rou) in a clay pot, glossy caramel sauce, tender meat, scallion garnish, warm light, food photography",
     ingredients: [
       { name: "五花肉", role: "main" },
       { name: "冰糖", role: "aux" },
@@ -210,8 +192,6 @@ export const recipes: Recipe[] = [
     name: "薏米红豆水",
     category: "drink",
     description: "去湿利水的红豆薏米水，孕期需避免薏米，月子期少量可饮。",
-    imagePrompt:
-      "adzuki bean and barley water drink in a glass, warm reddish brown liquid, red beans and barley grains, soft light, beverage photography",
     ingredients: [
       { name: "薏米", role: "main" },
       { name: "红豆", role: "main" },
@@ -231,8 +211,6 @@ export const recipes: Recipe[] = [
     name: "桂圆红枣茶",
     category: "drink",
     description: "温润甜茶，孕产期体质虚寒者少量可饮，热性体质慎用。",
-    imagePrompt:
-      "longan and red date tea in a glass teapot, warm amber liquid, dried longan and red dates, soft light, beverage photography",
     ingredients: [
       { name: "桂圆", role: "main" },
       { name: "红枣", role: "main" },
@@ -251,8 +229,6 @@ export const recipes: Recipe[] = [
     name: "山楂乌梅饮",
     category: "drink",
     description: "酸甜开胃的消食饮，孕期需限量，月子期少量开胃生津。",
-    imagePrompt:
-      "sour plum and hawthorn drink in a glass, deep red brown liquid, ice cubes, soft light, beverage photography",
     ingredients: [
       { name: "山楂", role: "main" },
       { name: "乌梅", role: "main" },
@@ -271,8 +247,6 @@ export const recipes: Recipe[] = [
     name: "当归生姜羊肉汤",
     category: "soup",
     description: "温经补血的经典月子汤，孕期禁用当归，月子期是调理佳品。",
-    imagePrompt:
-      "Chinese angelica ginger lamb soup in a clay pot, clear golden broth, tender lamb pieces, ginger slices, warm light, food photography",
     ingredients: [
       { name: "羊肉", role: "main" },
       { name: "当归", role: "main" },
@@ -292,8 +266,6 @@ export const recipes: Recipe[] = [
     name: "醉鸡",
     category: "meat_dish",
     description: "酒香浸鸡的传统冷盘，含酒精，孕期月子期均不宜。",
-    imagePrompt:
-      "Chinese drunken chicken cold dish on a plate, sliced pale chicken with herb garnish, warm light, food photography",
     ingredients: [
       { name: "鸡肉", role: "main" },
       { name: "料酒", role: "main" },

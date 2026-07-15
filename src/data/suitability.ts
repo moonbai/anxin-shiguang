@@ -78,12 +78,30 @@ export const stageMeta: Record<Stage, { label: string; sub: string }> = {
 export const buildDouyinUrl = (name: string): string =>
   `https://www.douyin.com/search/${encodeURIComponent(`${name} 做法`)}`;
 
-export const buildXhsUrl = (name: string): string =>
-  `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(
-    `${name} 做法`,
-  )}`;
+// 菜谱封面：emoji + 渐变色块（参考 HowToCook Dashboard 风格）
+const recipeCoverMap: Record<string, { emoji: string; gradient: string }> = {
+  "fanqie-chaodan": { emoji: "🍅", gradient: "from-red-400 to-orange-300" },
+  "zheng-shuidan": { emoji: "🥚", gradient: "from-yellow-300 to-amber-200" },
+  "xiaomi-nangua-zhou": { emoji: "🎃", gradient: "from-orange-400 to-yellow-300" },
+  "xihongshi-jidan-mian": { emoji: "🍜", gradient: "from-red-400 to-rose-300" },
+  "shanyao-paigu-tang": { emoji: "🦴", gradient: "from-amber-300 to-stone-200" },
+  "yiner-lianzi-hongzao-geng": { emoji: "🫕", gradient: "from-rose-300 to-pink-200" },
+  "qingchao-xilanhua": { emoji: "🥦", gradient: "from-green-400 to-emerald-300" },
+  "jiucai-jidan": { emoji: "🥬", gradient: "from-lime-400 to-green-300" },
+  "hongshao-rou": { emoji: "🥩", gradient: "from-red-500 to-amber-400" },
+  "yimi-hongdou-shui": { emoji: "🥤", gradient: "from-red-300 to-rose-200" },
+  "guiyuan-hongzao-cha": { emoji: "🍵", gradient: "from-amber-400 to-orange-300" },
+  "shanzha-wumei-yin": { emoji: "🧃", gradient: "from-red-400 to-purple-300" },
+  "danggui-shengjiang-yangrou-tang": { emoji: "🍲", gradient: "from-amber-400 to-red-300" },
+  "zui-ji": { emoji: "🍗", gradient: "from-yellow-300 to-amber-200" },
+};
 
-// 菜谱图片 URL（使用 picsum.photos 提供稳定的食物配图）
+export const defaultCover = { emoji: "🍽️", gradient: "from-clay/40 to-sage/30" };
+
+export const getRecipeCover = (recipeId: string) =>
+  recipeCoverMap[recipeId] || defaultCover;
+
+// 保留 buildImageUrl 以兼容详情页头图
 type ImageSize =
   | "square_hd"
   | "square"
@@ -119,9 +137,9 @@ const foodSeedMap: Record<string, number> = {
 };
 
 export const buildImageUrl = (
-  prompt: string,
+  recipeId: string,
   size: ImageSize = "landscape_4_3",
 ): string => {
-  const seed = foodSeedMap[prompt] || Math.floor(Math.random() * 1000);
+  const seed = foodSeedMap[recipeId] || Math.floor(Math.random() * 1000);
   return `https://picsum.photos/seed/food${seed}/${sizeMap[size]}`;
 };

@@ -11,7 +11,7 @@ export default {
         sm: "1.5rem",
         md: "2rem",
       },
-      screens: { "2xl": "1200px" },
+      screens: { "2xl": "1400px" },
     },
     extend: {
       colors: {

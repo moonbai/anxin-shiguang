@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import type { Recipe } from "@/data/types";
 import { categoryLabels } from "@/data/recipes";
-import { computeSuitability, buildImageUrl } from "@/data/suitability";
+import { computeSuitability, getRecipeCover } from "@/data/suitability";
 import { useStageStore } from "@/store/useStageStore";
 import { SafetyBadge } from "./SafetyBadge";
 
@@ -10,10 +10,10 @@ interface RecipeCardProps {
   index?: number;
 }
 
-// 菜谱卡片：安全徽章优先显示
 export function RecipeCard({ recipe, index = 0 }: RecipeCardProps) {
   const stage = useStageStore((s) => s.stage);
   const { level } = computeSuitability(recipe, stage);
+  const cover = getRecipeCover(recipe.id);
 
   return (
     <Link
@@ -21,17 +21,15 @@ export function RecipeCard({ recipe, index = 0 }: RecipeCardProps) {
       className="group relative flex flex-col overflow-hidden rounded-3xl bg-white shadow-soft ring-1 ring-ink/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-card animate-rise"
       style={{ animationDelay: `${index * 60}ms` }}
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-creamdark">
-        <img
-          src={buildImageUrl(recipe.imagePrompt, "landscape_4_3")}
-          alt={recipe.name}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
+      {/* 封面：emoji + 渐变色块 */}
+      <div className={`relative flex aspect-[4/3] items-center justify-center bg-gradient-to-br ${cover.gradient}`}>
+        <span className="text-6xl drop-shadow-lg transition-transform duration-500 group-hover:scale-110 md:text-7xl">
+          {cover.emoji}
+        </span>
         <div className="absolute left-3 top-3">
           <SafetyBadge level={level} />
         </div>
-        <div className="absolute right-3 top-3 rounded-pill bg-ink/70 px-2.5 py-0.5 text-[11px] font-medium text-cream backdrop-blur">
+        <div className="absolute right-3 top-3 rounded-pill bg-ink/60 px-2.5 py-0.5 text-[11px] font-medium text-cream backdrop-blur">
           {categoryLabels[recipe.category]}
         </div>
       </div>

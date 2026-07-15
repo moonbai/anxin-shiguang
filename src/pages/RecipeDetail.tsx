@@ -14,8 +14,8 @@ import { recipeById, categoryLabels } from "@/data/recipes";
 import { tabooByName } from "@/data/taboos";
 import {
   computeSuitability,
-  buildImageUrl,
   buildDouyinUrl,
+  getRecipeCover,
   levelMeta,
   stageMeta,
 } from "@/data/suitability";
@@ -64,37 +64,33 @@ export default function RecipeDetail() {
   const Icon = levelIcon[level];
   const otherStage = stage === "pregnancy" ? "confinement" : "pregnancy";
   const otherResult = computeSuitability(recipe, otherStage);
+  const cover = getRecipeCover(recipe.id);
 
   return (
     <article className="animate-fade">
-      {/* 头图区 */}
-      <div className="relative h-[38vh] min-h-[280px] w-full overflow-hidden md:h-[44vh] md:min-h-[320px]">
-        <img
-          src={buildImageUrl(recipe.imagePrompt, "landscape_16_9")}
-          alt={recipe.name}
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/10" />
-        <div className="container absolute inset-x-0 bottom-0 pb-6 md:pb-8">
+      {/* 头图区：emoji + 渐变色块 */}
+      <div className={`relative overflow-hidden bg-gradient-to-br ${cover.gradient}`}>
+        <div className="container flex min-h-[38vh] flex-col justify-end pb-6 pt-20 md:min-h-[44vh] md:pb-8 md:pt-24">
+          <span className="absolute right-8 top-1/2 -translate-y-1/2 text-[120px] opacity-20 md:text-[180px] select-none">
+            {cover.emoji}
+          </span>
           <Link
             to="/"
-            className="mb-4 inline-flex items-center gap-1.5 rounded-pill bg-cream/20 px-3 py-1.5 text-xs font-medium text-cream backdrop-blur hover:bg-cream/30"
+            className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-pill bg-ink/20 px-3 py-1.5 text-xs font-medium text-ink backdrop-blur hover:bg-ink/30"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             返回菜谱
           </Link>
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <span className="rounded-pill bg-cream/20 px-2.5 py-0.5 text-[11px] font-medium text-cream backdrop-blur">
-                {categoryLabels[recipe.category]}
-              </span>
-              <h1 className="mt-3 font-display text-3xl font-bold text-cream md:text-4xl lg:text-6xl">
-                {recipe.name}
-              </h1>
-              <p className="mt-2 max-w-xl text-sm text-cream/80">
-                {recipe.description}
-              </p>
-            </div>
+          <div className="relative z-10">
+            <span className="rounded-pill bg-ink/20 px-2.5 py-0.5 text-[11px] font-medium text-ink backdrop-blur">
+              {categoryLabels[recipe.category]}
+            </span>
+            <h1 className="mt-3 font-display text-3xl font-bold text-ink md:text-4xl lg:text-6xl">
+              {recipe.name}
+            </h1>
+            <p className="mt-2 max-w-xl text-sm text-ink/80">
+              {recipe.description}
+            </p>
           </div>
         </div>
       </div>

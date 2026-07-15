@@ -51,18 +51,35 @@ export default function Home() {
         );
       }
     } else {
-      const matched = recipes.filter((r) => {
-        const hasAllIngredients = selectedIngredients.every((ing) =>
-          r.ingredients.some((i) => i.name.includes(ing)),
-        );
-        return hasAllIngredients;
-      });
+      const matched = recipes.filter((r) =>
+        selectedIngredients.every((ing) =>
+          r.ingredients.some(
+            (i) => i.name.includes(ing) || ing.includes(i.name),
+          ),
+        ),
+      );
       const safeMatched = matched.filter(
         (r) => computeSuitability(r, stage).level === "safe",
       );
       const candidates = safeMatched.length > 0 ? safeMatched : matched;
       if (candidates.length > 0) {
         setRandomResult(candidates[Math.floor(Math.random() * candidates.length)]);
+      } else {
+        // 宽松匹配：任一食材匹配即可
+        const loose = recipes.filter((r) =>
+          selectedIngredients.some((ing) =>
+            r.ingredients.some(
+              (i) => i.name.includes(ing) || ing.includes(i.name),
+            ),
+          ),
+        );
+        const safeLoose = loose.filter(
+          (r) => computeSuitability(r, stage).level === "safe",
+        );
+        const pool = safeLoose.length > 0 ? safeLoose : loose;
+        if (pool.length > 0) {
+          setRandomResult(pool[Math.floor(Math.random() * pool.length)]);
+        }
       }
     }
   };
@@ -120,7 +137,7 @@ export default function Home() {
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-inksoft md:text-lg animate-rise" style={{ animationDelay: "160ms" }}>
               基于 HowToCook 开源菜谱，叠加孕期 / 月子期食材安全判定。
-              打开菜谱第一眼看到安全结论，想学还能一键跳抖音、小红书看视频。
+              打开菜谱第一眼看到安全结论，想学还能一键跳抖音看视频教程。
             </p>
           </div>
 
@@ -165,7 +182,7 @@ export default function Home() {
             desc={`已按当前阶段过滤出「适宜」菜谱，可放心烹饪`}
           />
           {recommendations.length > 0 ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {recommendations.map((r, i) => (
                 <RecipeCard key={r.id} recipe={r} index={i} />
               ))}
@@ -258,7 +275,7 @@ export default function Home() {
           </div>
 
           {list.length > 0 ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {list.map((r, i) => (
                 <RecipeCard key={r.id} recipe={r} index={i} />
               ))}
@@ -336,22 +353,25 @@ export default function Home() {
                       {randomResult.description}
                     </p>
                     <div className="mt-4 flex flex-wrap justify-center gap-2">
-                      {randomResult.ingredients.map((i) => (
-                        <span
-                          key={i.name}
-                          className={cn(
-                            "rounded-full px-2.5 py-1 text-xs",
-                            selectedIngredients.includes(i.name)
-                              ? "bg-safe text-white"
-                              : "bg-white text-inksoft ring-1 ring-ink/5",
-                          )}
-                        >
-                          {i.name}
-                          {selectedIngredients.includes(i.name) && (
-                            <Check className="ml-1 inline h-3 w-3" />
-                          )}
-                        </span>
-                      ))}
+                      {randomResult.ingredients.map((i) => {
+                        const isMatched = selectedIngredients.some(
+                          (sel) => i.name.includes(sel) || sel.includes(i.name),
+                        );
+                        return (
+                          <span
+                            key={i.name}
+                            className={cn(
+                              "rounded-full px-2.5 py-1 text-xs",
+                              isMatched
+                                ? "bg-safe text-white"
+                                : "bg-white text-inksoft ring-1 ring-ink/5",
+                            )}
+                          >
+                            {i.name}
+                            {isMatched && <Check className="ml-1 inline h-3 w-3" />}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                   <div className="mt-4 flex gap-3">
