@@ -16,7 +16,6 @@ import {
   computeSuitability,
   buildImageUrl,
   buildDouyinUrl,
-  buildXhsUrl,
   levelMeta,
   stageMeta,
 } from "@/data/suitability";
@@ -69,14 +68,14 @@ export default function RecipeDetail() {
   return (
     <article className="animate-fade">
       {/* 头图区 */}
-      <div className="relative h-[44vh] min-h-[320px] w-full overflow-hidden">
+      <div className="relative h-[38vh] min-h-[280px] w-full overflow-hidden md:h-[44vh] md:min-h-[320px]">
         <img
           src={buildImageUrl(recipe.imagePrompt, "landscape_16_9")}
           alt={recipe.name}
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/10" />
-        <div className="container absolute inset-x-0 bottom-0 pb-8">
+        <div className="container absolute inset-x-0 bottom-0 pb-6 md:pb-8">
           <Link
             to="/"
             className="mb-4 inline-flex items-center gap-1.5 rounded-pill bg-cream/20 px-3 py-1.5 text-xs font-medium text-cream backdrop-blur hover:bg-cream/30"
@@ -89,7 +88,7 @@ export default function RecipeDetail() {
               <span className="rounded-pill bg-cream/20 px-2.5 py-0.5 text-[11px] font-medium text-cream backdrop-blur">
                 {categoryLabels[recipe.category]}
               </span>
-              <h1 className="mt-3 font-display text-4xl font-bold text-cream md:text-6xl">
+              <h1 className="mt-3 font-display text-3xl font-bold text-cream md:text-4xl lg:text-6xl">
                 {recipe.name}
               </h1>
               <p className="mt-2 max-w-xl text-sm text-cream/80">
@@ -100,7 +99,7 @@ export default function RecipeDetail() {
         </div>
       </div>
 
-      <div className="container -mt-8 space-y-10 py-10">
+      <div className="container -mt-6 md:-mt-8 space-y-8 md:space-y-10 py-8 md:py-10">
         {/* 安全结论卡（首要） */}
         <SafetyConclusionCard
           level={level}
@@ -128,23 +127,6 @@ export default function RecipeDetail() {
                 <span>
                   <span className="block text-sm font-medium">抖音搜教程</span>
                   <span className="block text-xs text-cream/60">
-                    搜索「{recipe.name} 做法」
-                  </span>
-                </span>
-              </span>
-              <ExternalLink className="h-4 w-4 opacity-60 transition-transform group-hover:translate-x-0.5" />
-            </a>
-            <a
-              href={buildXhsUrl(recipe.name)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-between rounded-2xl bg-xhs px-5 py-4 text-cream shadow-soft transition-transform hover:-translate-y-0.5"
-            >
-              <span className="flex items-center gap-3">
-                <PlayCircle className="h-6 w-6" />
-                <span>
-                  <span className="block text-sm font-medium">小红书搜教程</span>
-                  <span className="block text-xs text-cream/80">
                     搜索「{recipe.name} 做法」
                   </span>
                 </span>
@@ -239,7 +221,7 @@ function SafetyConclusionCard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-3xl border-2 p-6 shadow-card md:p-8",
+        "relative overflow-hidden rounded-3xl border-2 p-5 shadow-card md:p-6 lg:p-8",
         meta.border,
         level === "safe"
           ? "bg-sage/8"
@@ -262,8 +244,8 @@ function SafetyConclusionCard({
             <p className="text-xs font-semibold tracking-[0.2em] text-inksoft">
               {stageLabel} · 安全结论
             </p>
-            <div className="mt-1 flex items-center gap-2">
-              <span className={cn("font-display text-3xl font-bold", meta.text)}>
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              <span className={cn("font-display text-2xl font-bold md:text-3xl", meta.text)}>
                 {meta.label}
               </span>
               <SafetyBadge level={level} />

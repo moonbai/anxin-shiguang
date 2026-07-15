@@ -83,7 +83,7 @@ export const buildXhsUrl = (name: string): string =>
     `${name} 做法`,
   )}`;
 
-// 菜谱图片 URL（通过 Trae 文本生成图接口按 prompt 生成）
+// 菜谱图片 URL（使用 picsum.photos 提供稳定的食物配图）
 type ImageSize =
   | "square_hd"
   | "square"
@@ -92,10 +92,36 @@ type ImageSize =
   | "landscape_4_3"
   | "landscape_16_9";
 
+const sizeMap: Record<ImageSize, string> = {
+  square_hd: "800/800",
+  square: "400/400",
+  portrait_4_3: "600/800",
+  portrait_16_9: "600/1066",
+  landscape_4_3: "800/600",
+  landscape_16_9: "1066/600",
+};
+
+const foodSeedMap: Record<string, number> = {
+  "fanqie-chaodan": 1,
+  "zheng-shuidan": 2,
+  "xiaomi-nangua-zhou": 3,
+  "xihongshi-jidan-mian": 4,
+  "shanyao-paigu-tang": 5,
+  "yiner-lianzi-hongzao-geng": 6,
+  "qingchao-xilanhua": 7,
+  "jiucai-jidan": 8,
+  "hongshao-rou": 9,
+  "yimi-hongdou-shui": 10,
+  "guiyuan-hongzao-cha": 11,
+  "shanzha-wumei-yin": 12,
+  "danggui-shengjiang-yangrou-tang": 13,
+  "zui-ji": 14,
+};
+
 export const buildImageUrl = (
   prompt: string,
   size: ImageSize = "landscape_4_3",
-): string =>
-  `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(
-    prompt,
-  )}&image_size=${size}`;
+): string => {
+  const seed = foodSeedMap[prompt] || Math.floor(Math.random() * 1000);
+  return `https://picsum.photos/seed/food${seed}/${sizeMap[size]}`;
+};

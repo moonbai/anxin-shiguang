@@ -1,12 +1,20 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, ShieldAlert, ArrowRight, Sparkles } from "lucide-react";
+import { Search, ShieldAlert, ArrowRight, Sparkles, Shuffle, Check, X } from "lucide-react";
 import { recipes, categoryLabels, categoryList } from "@/data/recipes";
 import { computeSuitability, stageMeta } from "@/data/suitability";
 import { useStageStore } from "@/store/useStageStore";
 import { RecipeCard } from "@/components/RecipeCard";
 import type { Level, RecipeCategory } from "@/data/types";
 import { cn } from "@/lib/utils";
+
+const commonIngredients = [
+  "鸡蛋", "番茄", "土豆", "西兰花", "白菜", "胡萝卜", "菠菜", "韭菜",
+  "排骨", "五花肉", "羊肉", "鸡肉", "鱼",
+  "小米", "大米", "面条",
+  "红枣", "枸杞", "桂圆", "山药", "银耳", "莲子",
+  "盐", "油", "葱", "姜", "蒜",
+];
 
 type Filter = "all" | Level;
 
@@ -22,6 +30,47 @@ export default function Home() {
   const [filter, setFilter] = useState<Filter>("all");
   const [category, setCategory] = useState<RecipeCategory | "all">("all");
   const [query, setQuery] = useState("");
+  const [showRandomModal, setShowRandomModal] = useState(false);
+  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
+  const [randomResult, setRandomResult] = useState<typeof recipes[0] | null>(null);
+
+  const toggleIngredient = (ing: string) => {
+    setSelectedIngredients((prev) =>
+      prev.includes(ing) ? prev.filter((i) => i !== ing) : [...prev, ing],
+    );
+  };
+
+  const findRandomRecipe = () => {
+    if (selectedIngredients.length === 0) {
+      const safeRecipes = recipes.filter(
+        (r) => computeSuitability(r, stage).level === "safe",
+      );
+      if (safeRecipes.length > 0) {
+        setRandomResult(
+          safeRecipes[Math.floor(Math.random() * safeRecipes.length)],
+        );
+      }
+    } else {
+      const matched = recipes.filter((r) => {
+        const hasAllIngredients = selectedIngredients.every((ing) =>
+          r.ingredients.some((i) => i.name.includes(ing)),
+        );
+        return hasAllIngredients;
+      });
+      const safeMatched = matched.filter(
+        (r) => computeSuitability(r, stage).level === "safe",
+      );
+      const candidates = safeMatched.length > 0 ? safeMatched : matched;
+      if (candidates.length > 0) {
+        setRandomResult(candidates[Math.floor(Math.random() * candidates.length)]);
+      }
+    }
+  };
+
+  const resetRandom = () => {
+    setSelectedIngredients([]);
+    setRandomResult(null);
+  };
 
   // 今日安心推荐：当前阶段 safe 菜谱取前 3
   const recommendations = useMemo(() => {
@@ -95,6 +144,15 @@ export default function Home() {
               搜索
             </button>
           </form>
+
+          <button
+            onClick={() => setShowRandomModal(true)}
+            className="mt-4 flex items-center gap-2 rounded-full bg-safe/10 px-5 py-2.5 text-sm font-medium text-safe ring-1 ring-safe/30 hover:bg-safe/20 transition-colors animate-rise"
+            style={{ animationDelay: "320ms" }}
+          >
+            <Shuffle className="h-4 w-4" />
+            不知道吃什么？随机做菜
+          </button>
         </div>
       </section>
 
@@ -210,6 +268,113 @@ export default function Home() {
           )}
         </section>
       </div>
+
+      {/* 随机做菜弹窗 */}
+      {showRandomModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 backdrop-blur-sm p-4" onClick={() => setShowRandomModal(false)}>
+          <div className="w-full max-w-lg overflow-hidden rounded-3xl bg-cream shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between border-b border-ink/5 px-6 py-4">
+              <div className="flex items-center gap-2">
+                <Shuffle className="h-5 w-5 text-clay" />
+                <h3 className="font-display text-lg font-semibold text-ink">随机做菜</h3>
+              </div>
+              <button onClick={() => setShowRandomModal(false)} className="rounded-full p-1.5 text-inksoft hover:bg-creamdark">
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="p-6">
+              {!randomResult ? (
+                <>
+                  <p className="text-sm text-inksoft">
+                    选择你有的食材（可选），我会为你推荐合适的菜谱：
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {commonIngredients.map((ing) => (
+                      <button
+                        key={ing}
+                        onClick={() => toggleIngredient(ing)}
+                        className={cn(
+                          "rounded-full px-3 py-1.5 text-xs font-medium transition-all",
+                          selectedIngredients.includes(ing)
+                            ? "bg-clay text-cream"
+                            : "bg-white text-inksoft ring-1 ring-ink/5 hover:ring-clay/50",
+                        )}
+                      >
+                        {selectedIngredients.includes(ing) && (
+                          <Check className="mr-1 inline h-3 w-3" />
+                        )}
+                        {ing}
+                      </button>
+                    ))}
+                  </div>
+                  {selectedIngredients.length > 0 && (
+                    <button
+                      onClick={() => setSelectedIngredients([])}
+                      className="mt-3 text-xs text-clay hover:underline"
+                    >
+                      清空选择
+                    </button>
+                  )}
+                  <button
+                    onClick={findRandomRecipe}
+                    className="mt-6 w-full rounded-2xl bg-clay py-3 text-sm font-medium text-cream hover:bg-claydark transition-colors"
+                  >
+                    {selectedIngredients.length > 0
+                      ? `用 ${selectedIngredients.join("、")} 做菜`
+                      : "随便推荐一道"}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="rounded-2xl bg-safe/10 p-4 text-center">
+                    <p className="text-sm text-inksoft">为你推荐：</p>
+                    <h4 className="mt-2 font-display text-2xl font-bold text-ink">
+                      {randomResult.name}
+                    </h4>
+                    <p className="mt-2 text-sm text-inksoft">
+                      {randomResult.description}
+                    </p>
+                    <div className="mt-4 flex flex-wrap justify-center gap-2">
+                      {randomResult.ingredients.map((i) => (
+                        <span
+                          key={i.name}
+                          className={cn(
+                            "rounded-full px-2.5 py-1 text-xs",
+                            selectedIngredients.includes(i.name)
+                              ? "bg-safe text-white"
+                              : "bg-white text-inksoft ring-1 ring-ink/5",
+                          )}
+                        >
+                          {i.name}
+                          {selectedIngredients.includes(i.name) && (
+                            <Check className="ml-1 inline h-3 w-3" />
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mt-4 flex gap-3">
+                    <button
+                      onClick={resetRandom}
+                      className="flex-1 rounded-2xl bg-white py-3 text-sm font-medium text-inksoft ring-1 ring-ink/5 hover:bg-creamdark transition-colors"
+                    >
+                      换一道
+                    </button>
+                    <Link
+                      to={`/recipe/${randomResult.id}`}
+                      onClick={() => setShowRandomModal(false)}
+                      className="flex-1 rounded-2xl bg-clay py-3 text-center text-sm font-medium text-cream hover:bg-claydark transition-colors"
+                    >
+                      查看做法
+                    </Link>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

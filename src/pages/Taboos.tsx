@@ -99,7 +99,7 @@ export default function Taboos() {
                   key={f.key}
                   onClick={() => setFilter(f.key)}
                   className={cn(
-                    "rounded-pill px-4 py-1.5 text-sm font-medium transition-all",
+                    "rounded-pill px-3.5 py-1.5 text-xs font-medium transition-all md:px-4 md:text-sm",
                     filter === f.key
                       ? "bg-ink text-cream shadow-soft"
                       : "bg-white text-inksoft ring-1 ring-ink/5 hover:text-ink",

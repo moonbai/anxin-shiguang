@@ -2,8 +2,8 @@ import type { Recipe } from "./types";
 
 // 菜谱数据：内容参考开源项目 HowToCook (https://github.com/Anduin2017/HowToCook)
 // 由于 GitHub raw 存在 CORS 限制无法运行时直抓，按 HowToCook 原始 markdown 内容
-// （标题 / 原料 / 步骤）整理为本地数据，保留 sourceUrl 指向 HowToCook 对应分类目录。
-const HT = "https://github.com/Anduin2017/HowToCook/tree/master/dishes";
+// （标题 / 原料 / 步骤）整理为本地数据，sourceUrl 指向 HowToCook 对应菜谱文件。
+const HT = "https://github.com/Anduin2017/HowToCook/blob/master/dishes";
 
 export const recipes: Recipe[] = [
   {
@@ -27,7 +27,7 @@ export const recipes: Recipe[] = [
       "底油下番茄翻炒出汁，加少许白糖中和酸味。",
       "番茄出汁后倒回鸡蛋翻匀，加盐调味，撒葱花出锅。",
     ],
-    sourceUrl: `${HT}/vegetarian_dish`,
+    sourceUrl: `${HT}/vegetable_dish/%E8%A5%BF%E7%BA%A2%E6%9F%BF%E7%82%92%E9%B8%A1%E8%9B%8B.md`,
   },
   {
     id: "zheng-shuidan",
@@ -49,7 +49,7 @@ export const recipes: Recipe[] = [
       "水开后中小火蒸 10–12 分钟，关火焖 2 分钟。",
       "出锅淋少许生抽、香油，撒葱花。",
     ],
-    sourceUrl: `${HT}/breakfast`,
+    sourceUrl: `${HT}/vegetable_dish/%E9%B8%A1%E8%9B%8B%E7%BE%B9.md`,
   },
   {
     id: "xiaomi-nangua-zhou",
@@ -69,7 +69,7 @@ export const recipes: Recipe[] = [
       "大火煮沸转小火煮 25 分钟至浓稠，期间搅动防粘底。",
       "粥面起稠即可关火，温食。",
     ],
-    sourceUrl: `${HT}/breakfast`,
+    sourceUrl: `${HT}/soup`,
   },
   {
     id: "xihongshi-jidan-mian",
@@ -157,7 +157,7 @@ export const recipes: Recipe[] = [
       "热锅爆香蒜片，下西兰花大火快炒。",
       "加盐调味，淋少许水翻匀出锅。",
     ],
-    sourceUrl: `${HT}/vegetarian_dish`,
+    sourceUrl: `${HT}/vegetable_dish/%E8%92%9C%E8%93%89%E8%A5%BF%E5%85%B0%E8%8A%B1.md`,
   },
   {
     id: "jiucai-jidan",
@@ -178,7 +178,7 @@ export const recipes: Recipe[] = [
       "底油下韭菜大火快炒 30 秒。",
       "倒回鸡蛋翻匀，加盐调味出锅。",
     ],
-    sourceUrl: `${HT}/vegetarian_dish`,
+    sourceUrl: `${HT}/vegetable_dish/%E9%9F%AD%E8%8F%9C%E7%82%92%E8%9B%8B.md`,
   },
   {
     id: "hongshao-rou",
@@ -203,7 +203,7 @@ export const recipes: Recipe[] = [
       "加生抽、老抽、姜片、葱段、八角、桂皮与热水没过肉。",
       "大火烧开转小火炖 50 分钟，大火收汁即可。",
     ],
-    sourceUrl: `${HT}/meat_dish`,
+    sourceUrl: `${HT}/meat_dish/%E7%BA%A2%E7%83%A7%E8%82%89.md`,
   },
   {
     id: "yimi-hongdou-shui",
