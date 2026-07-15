@@ -1,9 +1,9 @@
 import type { Recipe } from "./types";
 
 // 菜谱数据：内容参考开源项目 HowToCook (https://github.com/Anduin2017/HowToCook)
-// 由于 GitHub raw 存在 CORS 限制无法运行时直抓，按 HowToCook 原始 markdown 内容
-// （标题 / 原料 / 步骤）整理为本地数据，sourceUrl 指向 HowToCook 对应菜谱文件。
+// sourceUrl 直接引用 HowToCook README 中的菜谱链接
 const HT = "https://github.com/Anduin2017/HowToCook/blob/master/dishes";
+const HT_TREE = "https://github.com/Anduin2017/HowToCook/tree/master/dishes";
 
 export const recipes: Recipe[] = [
   {
@@ -49,7 +49,7 @@ export const recipes: Recipe[] = [
       "水开后中小火蒸 10–12 分钟，关火焖 2 分钟。",
       "出锅淋少许生抽、香油，撒葱花。",
     ],
-    sourceUrl: `${HT}/vegetable_dish/%E9%B8%A1%E8%9B%8B%E7%BE%B9.md`,
+    sourceUrl: `${HT}/vegetable_dish/%E9%B8%A1%E8%9B%8B%E7%BE%B9/%E9%B8%A1%E8%9B%8B%E7%BE%B9.md`,
   },
   {
     id: "xiaomi-nangua-zhou",
@@ -69,7 +69,7 @@ export const recipes: Recipe[] = [
       "大火煮沸转小火煮 25 分钟至浓稠，期间搅动防粘底。",
       "粥面起稠即可关火，温食。",
     ],
-    sourceUrl: `${HT}/soup`,
+    sourceUrl: `${HT}/soup/%E5%B0%8F%E7%B1%B3%E7%B2%A5.md`,
   },
   {
     id: "xihongshi-jidan-mian",
@@ -92,7 +92,7 @@ export const recipes: Recipe[] = [
       "加水煮沸下面条，煮至八成熟。",
       "倒回鸡蛋，加盐调味，撒葱花出锅。",
     ],
-    sourceUrl: `${HT}/staple`,
+    sourceUrl: `${HT}/staple/%E8%A5%BF%E7%BA%A2%E6%9F%BF%E9%B8%A1%E8%9B%8B%E6%8C%82%E9%9D%A2/%E8%A5%BF%E7%BA%A2%E6%9F%BF%E9%B8%A1%E8%9B%8B%E6%8C%82%E9%9D%A2.md`,
   },
   {
     id: "shanyao-paigu-tang",
@@ -114,7 +114,7 @@ export const recipes: Recipe[] = [
       "排骨加姜片与足量水大火烧开，转小火炖 40 分钟。",
       "下山药再炖 20 分钟，加枸杞与盐稍煮即可。",
     ],
-    sourceUrl: `${HT}/soup`,
+    sourceUrl: `${HT}/soup/%E6%8E%92%E9%AA%A8%E5%B1%B1%E8%8D%AF%E7%8E%89%E7%B1%B3%E6%B1%A4/%E6%8E%92%E9%AA%A8%E5%B1%B1%E8%8D%AF%E7%8E%89%E7%B1%B3%E6%B1%A4.md`,
   },
   {
     id: "yiner-lianzi-hongzao-geng",
@@ -136,7 +136,7 @@ export const recipes: Recipe[] = [
       "下莲子、红枣再炖 20 分钟。",
       "加冰糖与枸杞煮 5 分钟至浓稠。",
     ],
-    sourceUrl: `${HT}/dessert`,
+    sourceUrl: `${HT}/soup/%E9%93%B6%E8%80%B3%E8%8E%B2%E5%AD%90%E7%B2%A5/%E9%93%B6%E8%80%B3%E8%8E%B2%E5%AD%90%E7%B2%A5.md`,
   },
   {
     id: "qingchao-xilanhua",
@@ -203,7 +203,7 @@ export const recipes: Recipe[] = [
       "加生抽、老抽、姜片、葱段、八角、桂皮与热水没过肉。",
       "大火烧开转小火炖 50 分钟，大火收汁即可。",
     ],
-    sourceUrl: `${HT}/meat_dish/%E7%BA%A2%E7%83%A7%E8%82%89.md`,
+    sourceUrl: `${HT}/meat_dish/%E7%BA%A2%E7%83%A7%E8%82%89/%E7%AE%80%E6%98%93%E7%BA%A2%E7%83%A7%E8%82%89.md`,
   },
   {
     id: "yimi-hongdou-shui",
@@ -224,7 +224,7 @@ export const recipes: Recipe[] = [
       "转小火煮 40 分钟至豆软烂。",
       "加冰糖调味，滤出饮用。",
     ],
-    sourceUrl: `${HT}/drink`,
+    sourceUrl: `${HT_TREE}/drink`,
   },
   {
     id: "guiyuan-hongzao-cha",
@@ -244,7 +244,7 @@ export const recipes: Recipe[] = [
       "加水大火煮沸转小火煮 20 分钟。",
       "加枸杞再煮 5 分钟即可饮用。",
     ],
-    sourceUrl: `${HT}/drink`,
+    sourceUrl: `${HT}/breakfast/%E6%A1%82%E5%9C%86%E7%BA%A2%E6%9E%A3%E7%B2%A5.md`,
   },
   {
     id: "shanzha-wumei-yin",
@@ -264,7 +264,7 @@ export const recipes: Recipe[] = [
       "加水大火煮沸转小火煮 25 分钟。",
       "加冰糖煮至融化，滤渣饮用。",
     ],
-    sourceUrl: `${HT}/drink`,
+    sourceUrl: `${HT}/drink/%E9%85%B8%E6%A2%85%E6%B1%A4/%E9%85%B8%E6%A2%85%E6%B1%A4.md`,
   },
   {
     id: "danggui-shengjiang-yangrou-tang",
@@ -285,7 +285,7 @@ export const recipes: Recipe[] = [
       "羊肉、当归、姜片加水大火烧开转小火炖 1 小时。",
       "取出去当归包，加盐调味即成。",
     ],
-    sourceUrl: `${HT}/soup`,
+    sourceUrl: `${HT}/soup/%E7%BE%8A%E8%82%89%E6%B1%A4/%E7%BE%8A%E8%82%89%E6%B1%A4.md`,
   },
   {
     id: "zui-ji",
@@ -307,7 +307,7 @@ export const recipes: Recipe[] = [
       "鸡肉浸入酒卤冷藏入味 4 小时。",
       "取出斩件装盘。",
     ],
-    sourceUrl: `${HT}/meat_dish`,
+    sourceUrl: `${HT_TREE}/meat_dish`,
   },
 ];
 
