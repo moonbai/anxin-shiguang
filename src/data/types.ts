@@ -12,7 +12,8 @@ export type RecipeCategory =
   | "vegetarian_dish"
   | "soup"
   | "drink"
-  | "dessert";
+  | "dessert"
+  | "aquatic";
 
 // 食材在菜谱中的角色
 export type IngredientRole = "main" | "aux";
