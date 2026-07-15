@@ -1,0 +1,12 @@
+services:
+  anxin-shiguang:
+    image: ghcr.io/moonbai/anxin-shiguang:latest
+    container_name: anxin-shiguang
+    restart: unless-stopped
+    ports:
+      - "5200:80"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
