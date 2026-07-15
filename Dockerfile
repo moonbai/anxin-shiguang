@@ -1,11 +1,10 @@
-# 多阶段构建：先构建，再部署到 nginx
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
 
-RUN corepack enable pnpm && pnpm install --frozen-lockfile
+RUN npm install -g pnpm@10.28.1 && pnpm install --frozen-lockfile
 
 COPY . .
 
